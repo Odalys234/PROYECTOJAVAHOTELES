@@ -1,0 +1,18 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 102.5 102.5" style="enable-background:new 0 0 102.5 102.5;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#9A55FF;}
+	.st1{fill:#DA8CFF;}
+	.st2{font-family:'Verdana';}
+	.st3{font-size:10px;}
+</style>
+	<g>
+	<!-- Icono del hotel con diseño minimalista -->
+		<rect x="40" y="30" class="st0" width="22" height="60"/>
+		<rect x="65" y="50" class="st0" width="22" height="40"/>
+		<rect x="15" y="50" class="st0" width="22" height="40"/>
+		<rect x="52" y="65" class="st1" width="10" height="25"/>
+</g>
+	<!-- Texto del logo -->
+	<text x="50%" y="95%" text-anchor="middle" class="st2 st3" fill="#9A55FF">HotelManager</text>
+</svg>

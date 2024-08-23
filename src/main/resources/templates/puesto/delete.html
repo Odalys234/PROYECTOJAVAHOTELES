@@ -1,0 +1,23 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <h1>Eliminar puesto</h1>
+    <h3>¿Está seguro que desea eliminar el registro?</h3>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${puesto.id}"></dd>
+            <dt class="col-sm-2">Nombre</dt>
+            <dd class="col-sm-10" th:text="${puesto.nombre}"></dd>
+            <dt class="col-sm-2">Descripción</dt>
+            <dd class="col-sm-10" th:text="${puesto.descripcion}"></dd>
+        </dl>
+        <form th:action="@{/puestos/delete}" method="post">
+            <input type="hidden" name="id" th:value="${puesto.id}">
+            <input type="submit" value="Eliminar" class="btn btn-danger">
+            <a th:href="@{/puestos}" class="btn btn-success">Regresar</a>
+        </form>
+    </div>
+</div>
+</html>

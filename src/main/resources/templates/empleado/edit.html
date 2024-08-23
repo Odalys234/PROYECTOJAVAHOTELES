@@ -1,0 +1,60 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <h1>Detalles del empleado</h1>
+    <form th:action="@{/empleados/save}" th:object="${empleado}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del empleado" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" class="form-control" th:field="*{apellido}" id="apellido" placeholder="Escriba el apellido del empleado" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="Escriba el email del empleado" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" class="form-control" th:field="*{telefono}" id="telefono" placeholder="Escriba el teléfono del empleado" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="salario">Salario</label>
+                    <input type="number" class="form-control" th:field="*{salario}" id="salario" placeholder="Escriba el salario del empleado" required step="0.01">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="horario">Horario</label>
+                    <input type="text" class="form-control" th:field="*{horario}" id="horario" placeholder="Escriba el horario del empleado" required>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a th:href="@{/empleados}" class="btn btn-success">Regresar</a>
+    </form>
+</div>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div layout:fragment="content">
+    <h1>Editar Asignación Empleado-Puesto</h1>
+    <form th:action="@{/empleadoPuesto/update}" th:object="${empleadoPuesto}" method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="form-group">
+            <label for="empleado">Empleado</label>
+            <select id="empleado" name="empleadoId" class="form-control" required>
+                <option th:each="empleado : ${empleados}"
+                        th:value="${empleado.id}"
+                        th:text="|${empleado.nombre} ${empleado.apellido}|"
+                        th:selected="${empleado.id == empleadoPuesto.empleado.id}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="puesto">Puesto</label>
+            <select id="puesto" name="puestoId" class="form-control" required>
+                <option th:each="puesto : ${puestos}"
+                        th:value="${puesto.id}"
+                        th:text="${puesto.nombre}"
+                        th:selected="${puesto.id == empleadoPuesto.puesto.id}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a th:href="@{/empleadoPuesto}" class="btn btn-secondary">Regresar</a>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

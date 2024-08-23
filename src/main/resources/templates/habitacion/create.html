@@ -1,0 +1,65 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <h1>Crear una nueva habitación</h1>
+
+    <form th:action="@{/habitaciones/save}" th:object="${habitacion}" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="tipoHabitacion">Tipo de Habitación</label>
+                    <input type="text" class="form-control" th:field="*{tipoHabitacion}" id="tipoHabitacion" placeholder="Escriba el tipo de habitación" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="capacidad">Capacidad</label>
+                    <input type="number" class="form-control" th:field="*{capacidad}" id="capacidad" placeholder="Escriba la capacidad de la habitación" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="precioPorHora">Precio por Hora</label>
+                    <input type="number" class="form-control" th:field="*{precioPorHora}" id="precioPorHora" placeholder="Escriba el precio por hora" required step="0.01">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" class="form-control" th:field="*{descripcion}" id="descripcion" placeholder="Escriba la descripción de la habitación" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select id="estado" class="form-control" th:field="*{estado}" required>
+                        <option value="1" th:selected="${habitacion.estado == 1}">Ocupada</option>
+                        <option value="0" th:selected="${habitacion.estado == 0}">Disponible</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="file">Imagen de la habitación</label>
+                    <input type="file" class="form-control" id="file" name="file" required>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a th:href="@{/habitaciones}" class="btn btn-success">Regresar</a>
+    </form>
+</div>
+</html>

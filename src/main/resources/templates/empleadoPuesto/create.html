@@ -1,0 +1,37 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Crear nueva asignación Empleado-Puesto</h1>
+    <form th:action="@{/empleadoPuesto/save}" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="empleado">Empleado:</label>
+                    <select id="empleado" name="empleadoId" class="form-control" required>
+                        <option th:each="empleado : ${empleados}" th:value="${empleado.id}" th:text="|${empleado.nombre} ${empleado.apellido}|"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="puesto">Puesto:</label>
+                    <select id="puesto" name="puestoId" class="form-control" required>
+                        <option th:each="puesto : ${puestos}" th:value="${puesto.id}" th:text="${puesto.nombre}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="/empleadoPuesto" class="btn btn-secondary">Regresar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</html>

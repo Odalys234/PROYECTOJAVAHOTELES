@@ -1,0 +1,33 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <h1>Eliminar Habitación</h1>
+    <div>
+        <hr/>
+        <p>¿Estás seguro de que deseas eliminar esta habitación?</p>
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${habitacion.id}"></dd>
+            <dt class="col-sm-2">Tipo de Habitación</dt>
+            <dd class="col-sm-10" th:text="${habitacion.tipoHabitacion}"></dd>
+            <dt class="col-sm-2">Capacidad</dt>
+            <dd class="col-sm-10" th:text="${habitacion.capacidad} + ' personas'"></dd>
+            <dt class="col-sm-2">Precio por Hora</dt>
+            <dd class="col-sm-10" th:text="'$' + ${habitacion.precioPorHora}"></dd>
+            <dt class="col-sm-2">Descripción</dt>
+            <dd class="col-sm-10" th:text="${habitacion.descripcion}"></dd>
+            <dt class="col-sm-2">Estado</dt>
+            <dd class="col-sm-10" th:text="${habitacion.estado == 0 ? 'Disponible' : 'Ocupado'}"></dd>
+            <dt class="col-sm-2">Imagen</dt>
+            <dd class="col-sm-10">
+                <img th:src="@{'/uploads/imagenes/' + ${habitacion.imagenUrl}}" alt="Imagen de la habitación" style="width: 300px; height: auto; object-fit: cover; border-radius: 5px;" />
+            </dd>
+        </dl>
+        <form th:action="@{/habitaciones/delete}" method="post">
+            <input type="hidden" th:name="id" th:value="${habitacion.id}"/>
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <a th:href="@{/habitaciones}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+</html>

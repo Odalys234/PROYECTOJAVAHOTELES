@@ -1,0 +1,31 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <h1>Eliminar empleado</h1>
+    <h3>¿Está seguro que desea eliminar el registro?</h3>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${empleado.id}"></dd>
+            <dt class="col-sm-2">Nombre</dt>
+            <dd class="col-sm-10" th:text="${empleado.nombre}"></dd>
+            <dt class="col-sm-2">Apellido</dt>
+            <dd class="col-sm-10" th:text="${empleado.apellido}"></dd>
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10" th:text="${empleado.email}"></dd>
+            <dt class="col-sm-2">Teléfono</dt>
+            <dd class="col-sm-10" th:text="${empleado.telefono}"></dd>
+            <dt class="col-sm-2">Salario</dt>
+            <dd class="col-sm-10" th:text="${empleado.salario}"></dd>
+            <dt class="col-sm-2">Horario</dt>
+            <dd class="col-sm-10" th:text="${empleado.horario}"></dd>
+        </dl>
+        <form th:action="@{/empleados/delete}" method="post">
+            <input type="hidden" name="id" th:value="${empleado.id}">
+            <input type="submit" value="Eliminar" class="btn btn-danger">
+            <a th:href="@{/empleados}" class="btn btn-success">Regresar</a>
+        </form>
+    </div>
+</div>
+</html>
