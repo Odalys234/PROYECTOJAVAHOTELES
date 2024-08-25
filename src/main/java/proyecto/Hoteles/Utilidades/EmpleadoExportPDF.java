@@ -3,6 +3,7 @@ package proyecto.Hoteles.Utilidades;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.Image;
+import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -13,115 +14,119 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 public class EmpleadoExportPDF {
-    // Lista de empleados que se va a exportar en el PDF
     private List<Empleado> listaEmpleados;
 
-    // Constructor para lista de empleados
     public EmpleadoExportPDF(List<Empleado> listaEmpleados) {
         this.listaEmpleados = listaEmpleados;
     }
 
-    // Método para configurar la cabecera de la tabla en el PDF
     private void setCabeceraTabla(PdfPTable tabla) {
         PdfPCell celda = new PdfPCell();
 
         // Configuración del estilo de la celda de cabecera
-        Color colorPersonalizado = new Color(100, 150, 200); // Valores para RGB
-        celda.setBackgroundColor(colorPersonalizado);
-        celda.setPadding(5);
+        celda.setBackgroundColor(new Color(63, 81, 181)); // Azul moderno
+        celda.setPadding(10);
+        celda.setBorderWidth(1.5f);
+        celda.setBorderColor(new Color(230, 230, 230)); // Gris claro
 
-        // Fuente para el texto en las celdas de cabecera
-        Font fuente = FontFactory.getFont(FontFactory.HELVETICA);
-        fuente.setColor(Color.white);
+        // Fuente elegante para la cabecera
+        Font fuenteCabecera = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, Color.WHITE);
 
-        // Añadir celdas de cabecera para cada columna
-        celda.setPhrase(new Phrase("Id", fuente));
-        tabla.addCell(celda);
-        celda.setPhrase(new Phrase("Nombre", fuente));
-        tabla.addCell(celda);
-        celda.setPhrase(new Phrase("Apellido", fuente));
-        tabla.addCell(celda);
-        celda.setPhrase(new Phrase("Email", fuente));
-        tabla.addCell(celda);
-        celda.setPhrase(new Phrase("Teléfono", fuente));
-        tabla.addCell(celda);
-        celda.setPhrase(new Phrase("Salario", fuente));
-        tabla.addCell(celda);
-        celda.setPhrase(new Phrase("Horario", fuente));
-        tabla.addCell(celda);
-    }
-
-    // Método para agregar los datos de los empleados a la tabla en el PDF
-    private void setDatosTabla(PdfPTable tabla) {
-        for (Empleado empleado : listaEmpleados) {
-            // Añadir una fila con los datos de cada empleado
-            tabla.addCell(String.valueOf(empleado.getId()));
-            tabla.addCell(empleado.getNombre());
-            tabla.addCell(empleado.getApellido());
-            tabla.addCell(empleado.getEmail());
-            tabla.addCell(empleado.getTelefono());
-            tabla.addCell(String.format("$%.2f", empleado.getSalario()));
-            tabla.addCell(empleado.getHorario());
+        // Configurar las columnas de la cabecera
+        String[] titulos = {"Id", "Nombre", "Apellido", "Email", "Teléfono", "Salario", "Horario"};
+        for (String titulo : titulos) {
+            celda.setPhrase(new Phrase(titulo, fuenteCabecera));
+            tabla.addCell(celda);
         }
     }
 
-    // Método para exportar el documento PDF
+    private void setDatosTabla(PdfPTable tabla) {
+        Font fuenteCuerpo = FontFactory.getFont(FontFactory.HELVETICA, 10, Color.DARK_GRAY);
+
+        for (Empleado empleado : listaEmpleados) {
+            // Estilo para las celdas de datos
+            PdfPCell celda = new PdfPCell();
+            celda.setPadding(8);
+            celda.setBorderColor(new Color(200, 200, 200)); // Gris claro
+            celda.setBackgroundColor(new Color(245, 245, 245)); // Fondo sutil
+
+            // Añadir los datos del empleado
+            celda.setPhrase(new Phrase(String.valueOf(empleado.getId()), fuenteCuerpo));
+            tabla.addCell(celda);
+
+            celda.setPhrase(new Phrase(empleado.getNombre(), fuenteCuerpo));
+            tabla.addCell(celda);
+
+            celda.setPhrase(new Phrase(empleado.getApellido(), fuenteCuerpo));
+            tabla.addCell(celda);
+
+            celda.setPhrase(new Phrase(empleado.getEmail(), fuenteCuerpo));
+            tabla.addCell(celda);
+
+            celda.setPhrase(new Phrase(empleado.getTelefono(), fuenteCuerpo));
+            tabla.addCell(celda);
+
+            celda.setPhrase(new Phrase(String.format("$%.2f", empleado.getSalario()), fuenteCuerpo));
+            tabla.addCell(celda);
+
+            celda.setPhrase(new Phrase(empleado.getHorario(), fuenteCuerpo));
+            tabla.addCell(celda);
+        }
+    }
+
     public void Exportar(HttpServletResponse response) throws IOException {
-        // Crear un nuevo documento PDF con tamaño A4
         Document documento = new Document(PageSize.A4);
-
-        // Obtener una instancia de PdfWriter para escribir en el documento
-        PdfWriter.getInstance(documento, response.getOutputStream());
-
-        // Abrir el documento para agregar contenido
+        PdfWriter writer = PdfWriter.getInstance(documento, response.getOutputStream());
         documento.open();
 
+        // Agregar logo
         try {
-            // Cargar la imagen desde los recursos
             InputStream inputStream = getClass().getResourceAsStream("/static/dist/assets/images/faces/Logo.png");
             if (inputStream != null) {
-                Image imagen = Image.getInstance(ImageIO.read(inputStream), null);
-                imagen.scaleToFit(100, 50); // Ajustar el tamaño de la imagen
-                imagen.setAbsolutePosition(50, 750); // Posicionar la imagen en la esquina superior izquierda
-                documento.add(imagen);
-            } else {
-                System.out.println("No se pudo cargar la imagen");
+                Image logo = Image.getInstance(ImageIO.read(inputStream), null);
+                logo.scaleToFit(100, 50);
+                logo.setAlignment(Image.ALIGN_LEFT);
+                documento.add(logo);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Añadir un espacio en blanco para evitar que el título se superponga con la imagen
-        documento.add(new Paragraph(" ")); // Espacio en blanco
-        documento.add(new Paragraph(" ")); // Espacio en blanco adicional si es necesario
-
-        // Fuente para el título del documento
-        Font fuente = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        fuente.setColor(Color.BLACK);
-        fuente.setSize(18);
-
-        // Crear y agregar el título al documento
-        Paragraph titulo = new Paragraph("Lista de Empleados", fuente);
+        // Título estilizado
+        Font fuenteTitulo = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20, Color.BLACK);
+        Paragraph titulo = new Paragraph("Lista de Empleados", fuenteTitulo);
         titulo.setAlignment(Paragraph.ALIGN_CENTER);
+        titulo.setSpacingBefore(20);
+        titulo.setSpacingAfter(30);
         documento.add(titulo);
 
-        // Crear la tabla con 7 columnas
+        // Tabla con datos
         PdfPTable tabla = new PdfPTable(7);
-        tabla.setWidthPercentage(100); // Establecer el ancho de la tabla
-        tabla.setSpacingBefore(15); // Espacio antes de la tabla
-        tabla.setWidths(new float[]{1f, 2f, 2f, 3f, 2f, 2f, 2f}); // Ancho relativo de las columnas
-
-        // Configurar y añadir las cabeceras y los datos a la tabla
+        tabla.setWidthPercentage(100);
+        tabla.setSpacingBefore(20);
+        tabla.setWidths(new float[]{1f, 2f, 2f, 3f, 2f, 2f, 2f});
         setCabeceraTabla(tabla);
         setDatosTabla(tabla);
-
-        // Añadir la tabla al documento
         documento.add(tabla);
 
-        // Cerrar el documento
+        // Pie de página elegante
+        Font fuentePie = FontFactory.getFont(FontFactory.HELVETICA_OBLIQUE, 10, Color.GRAY);
+        Paragraph pie = new Paragraph("Documento generado el: " + new Date().toString(), fuentePie);
+        pie.setAlignment(Paragraph.ALIGN_RIGHT);
+        pie.setSpacingBefore(30);
+        documento.add(pie);
+
+        // Línea de diseño
+        PdfContentByte canvas = writer.getDirectContent();
+        canvas.setColorStroke(new Color(180, 180, 180));
+        canvas.moveTo(36, 50);
+        canvas.lineTo(documento.getPageSize().getWidth() - 36, 50);
+        canvas.stroke();
+
         documento.close();
     }
 }

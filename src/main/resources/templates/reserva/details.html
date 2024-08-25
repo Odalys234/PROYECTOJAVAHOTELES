@@ -1,0 +1,26 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <h1>Detalles de la reserva</h1>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${reserva.id}"></dd>
+            <dt class="col-sm-2">Habitación</dt>
+            <dd class="col-sm-10" th:text="${reserva.habitacion.tipoHabitacion}"></dd>
+            <dt class="col-sm-2">Cliente</dt>
+            <dd class="col-sm-10" th:text="${reserva.cliente.nombre}"></dd>
+            <dt class="col-sm-2">Fecha de entrada</dt>
+            <dd class="col-sm-10" th:text="${reserva.fechaEntrada}"></dd>
+            <dt class="col-sm-2">Fecha de salida</dt>
+            <dd class="col-sm-10" th:text="${reserva.fechaSalida}"></dd>
+            <dt class="col-sm-2">Monto Total</dt>
+            <dd class="col-sm-10" th:text="'$' + ${reserva.montoTotal}"></dd>
+        </dl>
+        <a th:href="@{/reservas/edit/{id} (id=${reserva.id})}" class="btn btn-outline-info">Editar</a>
+        <a th:href="@{/reservas/facturas/generar(reservaId=${reserva.id})}" class="btn btn-primary">Generar Factura</a>
+        <a th:href="@{/reservas}" class="btn btn-success">Regresar</a>
+    </div>
+</div>
+</html>

@@ -1,0 +1,29 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <h1>Eliminar Reserva</h1>
+    <h3>¿Está seguro que desea eliminar esta reserva?</h3>
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${reserva.id}"></dd>
+            <dt class="col-sm-2">Cliente</dt>
+            <dd class="col-sm-10" th:text="${reserva.cliente.nombre + ' ' + reserva.cliente.apellido}"></dd>
+            <dt class="col-sm-2">Habitación</dt>
+            <dd class="col-sm-10" th:text="|${reserva.habitacion.tipoHabitacion} - $${reserva.habitacion.precioPorHora} por hora|"></dd>
+            <dt class="col-sm-2">Fecha de Entrada</dt>
+            <dd class="col-sm-10" th:text="${reserva.fechaEntrada}"></dd>
+            <dt class="col-sm-2">Fecha de Salida</dt>
+            <dd class="col-sm-10" th:text="${reserva.fechaSalida}"></dd>
+            <dt class="col-sm-2">Monto Total</dt>
+            <dd class="col-sm-10" th:text="${reserva.montoTotal}"></dd>
+        </dl>
+        <form th:action="@{/reservas/delete}" method="post">
+            <input type="hidden" name="id" th:value="${reserva.id}">
+            <input type="submit" value="Eliminar" class="btn btn-danger">
+            <a th:href="@{/reservas}" class="btn btn-secondary">Regresar</a>
+        </form>
+    </div>
+</div>
+</html>

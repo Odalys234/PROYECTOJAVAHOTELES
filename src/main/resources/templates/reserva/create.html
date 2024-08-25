@@ -1,0 +1,101 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear nueva reserva</title>
+    <script>
+        function calcularMonto() {
+            // Obtener los valores de las fechas de entrada y salida
+            const fechaEntrada = new Date(document.getElementById('fechaEntrada').value);
+            const fechaSalida = new Date(document.getElementById('fechaSalida').value);
+            const precioPorHora = parseFloat(document.getElementById('precioPorHora').value);
+
+            // Validar que las fechas y el precio estén seleccionados correctamente
+            if (fechaEntrada && fechaSalida && precioPorHora && fechaSalida > fechaEntrada) {
+                // Calcular la diferencia en horas
+                const horasDeEstancia = Math.abs(fechaSalida - fechaEntrada) / 36e5; // 36e5 equivale a 3600000 (milisegundos en una hora)
+                const montoTotal = horasDeEstancia * precioPorHora;
+
+                // Mostrar el monto total en el campo correspondiente
+                document.getElementById('montoTotal').value = montoTotal.toFixed(2);
+            } else {
+                document.getElementById('montoTotal').value = '0.00';
+            }
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+<h1>Crear nueva reserva</h1>
+<form th:action="@{/reservas/save}" th:object="${reserva}" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+        <label for="habitacion">Habitación:</label>
+        <select id="habitacion" th:field="*{habitacion.id}" onchange="calcularMonto()" class="form-control" required>
+            <option th:each="habitacion : ${habitaciones}" th:value="${habitacion.id}" th:data-precio="${habitacion.precioPorHora}" th:text="|${habitacion.tipoHabitacion} - $${habitacion.precioPorHora} por hora|">Habitación</option>
+        </select>
+        <input type="hidden" id="precioPorHora" value="0">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+        <label for="cliente">Cliente:</label>
+        <select  id="cliente" th:field="*{cliente.id}" class="form-control" required>
+            <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}">Cliente</option>
+        </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+        <label for="fechaEntrada">Fecha de entrada:</label>
+        <input type="datetime-local" id="fechaEntrada" th:field="*{fechaEntrada}" onchange="calcularMonto()" required>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+        <label for="fechaSalida">Fecha de salida:</label>
+        <input type="datetime-local" id="fechaSalida" th:field="*{fechaSalida}" onchange="calcularMonto()" required>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+        <label for="montoTotal">Monto Total $:</label>
+        <input type="text" id="montoTotal" name="montoTotal" th:field="*{montoTotal}" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="/reservas" class="btn btn-secondary">Regresar</a>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    document.getElementById('habitacion').addEventListener('change', function() {
+     const selectedOption = this.options[this.selectedIndex];
+     const precioPorHora = selectedOption.getAttribute('data-precio');
+     if (precioPorHora) {
+         document.getElementById('precioPorHora').value = precioPorHora;
+         calcularMonto();
+     } else {
+         console.error("El precio por hora es nulo o no se ha definido correctamente.");
+     }
+ });
+
+</script>
+</div>
+</body>
+</html>
