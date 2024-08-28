@@ -50,10 +50,14 @@
         </tr>
         </tbody>
     </table>
+    </br>
+    </br>
     <nav class="Page navigation example">
-        <ul class="pagination">
+        <ul class="pagination justify-content-start">
             <li class="page-item" th:each="pageNumber: ${pageNumbers}">
-                <a class="page-link" th:href="@{|/reservas?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+                <div class="btn-group" role="group" aria-label="Pagination">
+                    <a class="btn btn-primary me-2" th:href="@{|/reservas?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+                </div>
             </li>
         </ul>
     </nav>

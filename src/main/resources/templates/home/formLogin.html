@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>HotelManager</title>
+
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/font-awesome/css/font-awesome.min.css}">
+    <!-- endinject -->
+
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/font-awesome/css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css}">
+    <!-- End plugin css for this page -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" th:href="@{/dist/assets/css/style.css}">
+    <!-- endinject -->
+
+    <!-- Layout styles -->
+    <link rel="stylesheet" th:href="@{/dist/assets/css/style.css}">
+    <!-- End layout styles -->
+
+    <link rel="shortcut icon" th:href="@{/dist/assets/images/favicon.png}" />
+
+    <!-- SweetAlert2 -->
+    <script th:src="@{/plugins/sweetalert2/sweetalert2.all.min.js}"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+    </style>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="login-container">
+                <div class="logo">
+
+
+                </div>
+                <h3 class="text-center mb-4">HOTELMANAGER</h3>
+                <form th:action="@{/login}" method="post">
+                    <div class="form-group">
+                        <label for="username">Usuario</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Clave</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary ">LOGIN</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

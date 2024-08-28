@@ -1,39 +1,157 @@
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/layouts/_mainLayout">
-<div layout:fragment="content">
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-    <body>
-    <div class="container-scroller">
-        <div class="container-fluid page-body-wrapper full-page-wrapper">
-            <div class="content-wrapper d-flex align-items-center text-center error-page bg-primary">
-                <div class="row flex-grow">
-                    <div class="col-lg-7 mx-auto text-white">
-                        <div class="row align-items-center d-flex flex-row">
-                            <div class="col-lg-6 text-lg-right pr-lg-4">
-                                <h1 class="display-1 mb-0">H</h1>
+
+<!-- Aplicar el layout solo si el usuario está autenticado -->
+<div sec:authorize="isAuthenticated()">
+    <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          layout:decorate="layouts/_mainLayout">
+    <div layout:fragment="content">
+        <div class="container-scroller">
+            <div class="container-fluid page-body-wrapper full-page-wrapper">
+                <div class="content-wrapper d-flex align-items-center text-center error-page bg-primary">
+                    <div class="row flex-grow">
+                        <div class="col-lg-7 mx-auto text-white">
+                            <div class="row align-items-center d-flex flex-row">
+                                <div class="col-lg-6 text-lg-right pr-lg-4">
+                                    <h1 class="display-1 mb-0">H</h1>
+                                </div>
+                                <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
+                                    <h2>BIENVENIDO</h2>
+                                    <h3 class="font-weight-light">Gestión inteligente para un servicio impecable.</h3>
+                                </div>
                             </div>
-                            <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
-                                <h2>BIENVENIDO</h2>
-                                <h3 class="font-weight-light">Gestión inteligente para un servicio impecable.</h3>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-12 text-center mt-xl-2">
-                                <a class="text-white font-weight-medium" href="../../index.html">Ir al panel de administracion</a>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-12 mt-xl-2">
-                                <p class="text-white font-weight-medium text-center"></p>
+                            <div class="row mt-5">
+                                <div class="col-12 mt-xl-2">
+                                    <p class="text-white font-weight-medium text-center"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- content-wrapper ends -->
             </div>
-            <!-- content-wrapper ends -->
+            <!-- page-body-wrapper ends -->
         </div>
-        <!-- page-body-wrapper ends -->
     </div>
-
-    </body>
 </div>
+
+<!-- Mostrar contenido sin layout si el usuario no está autenticado -->
+<div sec:authorize="!isAuthenticated()">
+    <title>Listado de Habitaciones</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/font-awesome/css/font-awesome.min.css}">
+    <!-- endinject -->
+
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" th:href="@{/dist/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css}">
+    <!-- End plugin css for this page -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" th:href="@{/dist/assets/css/style.css}">
+    <!-- endinject -->
+
+    <!-- Layout styles -->
+    <link rel="stylesheet" th:href="@{/dist/assets/css/style.css}">
+    <!-- End layout styles -->
+
+    <link rel="shortcut icon" th:href="@{/dist/assets/images/favicon.png}" />
+
+    <!-- SweetAlert2 -->
+    <script th:src="@{/plugins/sweetalert2/sweetalert2.all.min.js}"></script>
+
+    <style>
+        .room-card {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .bg-primary-custom {
+            background-color: #007bff;
+        }
+
+        .text-white-custom {
+            color: #ffffff;
+        }
+
+        .container-text-center {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .room-card {
+    background: linear-gradient(45deg, #FF6B6B, #FFD93D);
+    color: white;
+    border-radius: 10px;
+    opacity: 0.9; /* Para hacer el contenedor un poco transparente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.room-card:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+.list-group-item {
+    background: linear-gradient(45deg, #FF6B6B, #FFD93D);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.list-group-item strong {
+    color: white;
+}
+
+.room-card .card-body {
+    padding: 15px;
+    background: linear-gradient(45deg, #FF6B6B, #FFD93D);
+    border-radius: 10px;
+    color: white;
+}
+
+    }
+    </style>
+    <div class="content-wrapper d-flex align-items-center text-center error-page bg-primary">
+
+    <div class="container text-center mt-5">
+        <h2 class="text text-danger">Habitaciones</h2>
+        <p class="text text-white">Explore nuestras opciones de alojamiento y encuentre la habitación perfecta para su estancia:</p>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-4" th:each="item : ${habitaciones}">
+                <div class="card mb-4 shadow-sm room-card">
+                    <img th:src="@{'/uploads/imagenes/' + ${item.imagenUrl}}" alt="Imagen de la habitación"
+                         class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${item.tipoHabitacion}">Tipo de Habitación</h5>
+                        <p class="card-text" th:text="${item.descripcion}">Descripción de la habitación</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Capacidad:</strong> <span th:text="${item.capacidad}"></span>
+                                personas</li>
+                            <li class="list-group-item"><strong>Precio por Hora:</strong> $<span
+                                    th:text="${item.precioPorHora}"></span></li>
+                            <li class="list-group-item"><strong>Estado:</strong> <span
+                                    th:text="${item.estado == 0 ? 'Disponible' : 'Ocupado'}"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-text-center">
+            <p>Iniciar sesión para gestionar habitaciones.</p>
+            <a href="/login" class="btn btn-gradient-danger mt-3">Iniciar Sesión</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+</html>

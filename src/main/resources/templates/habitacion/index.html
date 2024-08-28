@@ -50,10 +50,14 @@
         </div>
     </div>
 
+    </br>
+    </br>
     <div class="d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item" th:each="pageNumber: ${pageNumbers}">
-                <a class="page-link" th:href="@{|/habitaciones?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+                <div class="btn-group" role="group" aria-label="Pagination">
+                    <a class="btn btn-primary me-2" th:href="@{|/habitaciones?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+                </div>
             </li>
         </ul>
     </div>
