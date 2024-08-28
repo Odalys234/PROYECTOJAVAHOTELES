@@ -25,11 +25,11 @@ public class ClienteExportPDF {
     private void setCabeceraTabla(PdfPTable tabla) {
         PdfPCell celda = new PdfPCell();
 
-        // Estilo de la cabecera
-        celda.setBackgroundColor(new Color(0, 121, 191)); // Azul moderno
+
+        celda.setBackgroundColor(new Color(0, 121, 191));
         celda.setPadding(10);
         celda.setBorderWidth(1);
-        celda.setBorderColor(new Color(0, 0, 0, 0.1f)); // Gris claro para un borde sutil
+        celda.setBorderColor(new Color(0, 0, 0, 0.1f));
 
         Font fuenteCabecera = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
         fuenteCabecera.setColor(Color.WHITE);
@@ -60,8 +60,8 @@ public class ClienteExportPDF {
         for (Cliente cliente : listaClientes) {
             PdfPCell celda = new PdfPCell(new Phrase(String.valueOf(cliente.getId()), fuenteCuerpo));
             celda.setPadding(8);
-            celda.setBorderColor(new Color(200, 200, 200)); // Color gris claro para los bordes
-            celda.setBackgroundColor(new Color(245, 245, 245)); // Fondo sutil para filas
+            celda.setBorderColor(new Color(200, 200, 200));
+            celda.setBackgroundColor(new Color(245, 245, 245));
             tabla.addCell(celda);
 
             celda.setPhrase(new Phrase(cliente.getNombre(), fuenteCuerpo));

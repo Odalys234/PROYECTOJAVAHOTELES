@@ -64,7 +64,6 @@ public class ReservaController {
 
     @GetMapping("/create")
     public String create(Reserva reserva, Model model) {
-        // Asegúrate de cargar aquí la lista de habitaciones y clientes para mostrarlas en el formulario
         model.addAttribute("habitaciones", reservaServices.obtenerTodasLasHabitaciones());
         model.addAttribute("clientes", reservaServices.obtenerTodosLosClientes());
         return "reserva/create";
@@ -102,7 +101,6 @@ public class ReservaController {
             return "redirect:/reservas";
         }
         model.addAttribute("reserva", reserva);
-        // Asegúrate de cargar la lista de habitaciones y clientes para el formulario de edición
         model.addAttribute("habitaciones", reservaServices.obtenerTodasLasHabitaciones());
         model.addAttribute("clientes", reservaServices.obtenerTodosLosClientes());
         return "reserva/edit";
@@ -168,29 +166,4 @@ public class ReservaController {
     }
 
 
-
-   /* @GetMapping("/exportarPDF")
-    public void exportarReservas(HttpServletResponse response) throws IOException {
-        // Establece el tipo de contenido de la respuesta como "application/pdf"
-        response.setContentType("application/pdf");
-
-        // Crea un objeto SimpleDateFormat para formatear la fecha actual en un formato específico
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-
-        // Obtiene la fecha y hora actual formateada como cadena
-        String fechaActual = dateFormatter.format(new Date());
-
-        // Define el encabezado "Content-Disposition" de la respuesta
-        // Este encabezado indica que el contenido debe mostrarse en línea (en el navegador) y sugiere un nombre de archivo para el PDF
-        String cabecera = "Content-Disposition";
-        String valor = "inline; filename=Reservas_" + fechaActual + ".pdf";
-        response.setHeader(cabecera, valor);
-
-        // Obtiene una lista de todas las reservas desde el servicio de reservas
-        List<Reserva> reservas = reservaServices.ObtenerTodos();
-        // Crea una instancia de la clase ReservaExportPDF, pasando la lista de reservas como parámetro
-        ReservaExportPDF exporter = new ReservaExportPDF(reservas);
-        // Llama al método Exportar para generar el PDF y enviarlo en la respuesta HTTP
-        exporter.Exportar(response);
-    }*/
 }

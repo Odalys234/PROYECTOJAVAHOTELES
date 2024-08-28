@@ -25,13 +25,13 @@ public class Habitacion {
     private String descripcion;
 
     @NotNull(message = "El estado es obligatorio")
-    private Integer estado; // 0 = Disponible, 1 = Ocupado
+    private Integer estado;
 
     @NotBlank(message = "La imagen es obligatoria")
 
-    private String imagenUrl; // Ruta o URL de la imagen
+    private String imagenUrl;
 
-    // Getters y setters
+
 
     public Integer getId() {
         return id;

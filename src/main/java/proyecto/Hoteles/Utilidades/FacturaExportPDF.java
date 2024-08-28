@@ -93,7 +93,7 @@ public class FacturaExportPDF {
         document.add(table);
         document.add(new Paragraph("\n"));
 
-        // Mensaje de agradecimiento
+
         Paragraph gracias = new Paragraph("Gracias por su preferencia.", fontTitle);
         gracias.setAlignment(Element.ALIGN_CENTER);
         document.add(gracias);
